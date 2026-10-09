@@ -132,7 +132,9 @@ from django.db.models import Q
 
 
 # API View using Viewsets class
+from rest_framework.permissions import IsAuthenticated
 class MovieView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated,]
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
 
@@ -166,17 +168,17 @@ class RegisterAPIView(APIView):
         else:
             return Response(serializer_instance.errors,status=status.HTTP_400_BAD_REQUEST)
 
-from django.contrib.auth import authenticate
-from rest_framework.authtoken.models import Token
-# API View for Authentication - Obtain authentication Token
-class obtain_auth_token(APIView):
-    def post(self,request):
-        data=request.data
-        u=data['username']
-        p=data['password']
-        user=authenticate(username=u,password=p)    # authenicate() returns user object if a user matching with username nd password exist else return none
-        if user:
-            token,created=Token.objects.get_or_create(user=user)    # get_or_create() function returns token object and create flag if already record exists in Token table Created flag returns False Else it returns True. If we use create() it only returns token object but get_or_create() returns
-            return JsonResponse({'Token':token.key})
-        else:
-            return JsonResponse({'Message':'Invalid User Credentials'})
+# from django.contrib.auth import authenticate
+# from rest_framework.authtoken.models import Token
+# # API View for Authentication - Obtain authentication Token
+# class obtain_auth_token(APIView):
+#     def post(self,request):
+#         data=request.data
+#         u=data['username']
+#         p=data['password']
+#         user=authenticate(username=u,password=p)    # authenicate() returns user object if a user matching with username nd password exist else return none
+#         if user:
+#             token,created=Token.objects.get_or_create(user=user)    # get_or_create() function returns token object and create flag if already record exists in Token table Created flag returns False Else it returns True. If we use create() it only returns token object but get_or_create() returns
+#             return JsonResponse({'Token':token.key})
+#         else:
+#             return JsonResponse({'Message':'Invalid User Credentials'})

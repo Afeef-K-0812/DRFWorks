@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path,include
 from movies import views
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 
 router=DefaultRouter()
 router.register('movies',views.MovieView)
@@ -31,5 +32,7 @@ urlpatterns = [
     path('',include(router.urls)),
     path('searchmovies',views.SearchAPIView.as_view()),
     path('userregister',views.RegisterAPIView.as_view()),
-    path('userlogin',views.obtain_auth_token.as_view()),
+    # path('userlogin',views.obtain_auth_token.as_view()),
+    path('userlogin',obtain_auth_token)
+
 ]
