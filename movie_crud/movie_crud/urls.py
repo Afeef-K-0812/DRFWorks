@@ -33,6 +33,7 @@ urlpatterns = [
     path('searchmovies',views.SearchAPIView.as_view()),
     path('userregister',views.RegisterAPIView.as_view()),
     # path('userlogin',views.obtain_auth_token.as_view()),
-    path('userlogin',obtain_auth_token)
+    path('userlogin',obtain_auth_token),
+    path('userlogout',views.Logout.as_view()),
 
 ]

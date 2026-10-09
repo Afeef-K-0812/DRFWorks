@@ -182,3 +182,12 @@ class RegisterAPIView(APIView):
 #             return JsonResponse({'Token':token.key})
 #         else:
 #             return JsonResponse({'Message':'Invalid User Credentials'})
+
+
+# API View for Logout
+class Logout(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+        print(self.request.user)
+        self.request.user.auth_token.delete()
+        return Response({'Message':'Logged out Successfully'})
