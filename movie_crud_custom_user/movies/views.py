@@ -1,4 +1,3 @@
-from django.http.response import JsonResponse
 from django.shortcuts import render,get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -165,18 +164,3 @@ class RegisterAPIView(APIView):
             return Response(serializer_instance.data,status=status.HTTP_201_CREATED)
         else:
             return Response(serializer_instance.errors,status=status.HTTP_400_BAD_REQUEST)
-
-from django.contrib.auth import authenticate
-from rest_framework.authtoken.models import Token
-# API View for Authentication - Obtain authentication Token
-class obtain_auth_token(APIView):
-    def post(self,request):
-        data=request.data
-        u=data['username']
-        p=data['password']
-        user=authenticate(username=u,password=p)    # authenicate() returns user object if a user matching with username nd password exist else return none
-        if user:
-            token,created=Token.objects.get_or_create(user=user)    # get_or_create() function returns token object and create flag if already record exists in Token table Created flag returns False Else it returns True. If we use create() it only returns token object but get_or_create() returns
-            return JsonResponse({'Token':token.key})
-        else:
-            return JsonResponse({'Message':'Invalid User Credentials'})

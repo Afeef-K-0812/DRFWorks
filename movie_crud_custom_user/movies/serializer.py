@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from rest_framework import serializers
 from movies.models import Movie
 
@@ -34,14 +35,21 @@ class MovieSerializer(serializers.ModelSerializer):
 
         # fields=['title','director','language','year','rating','runtime']
 
+
 from django.contrib.auth.models import User
+from movies.models import CustomUser
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model=User
-        fields=['username','password','email','first_name','last_name']
+        model=CustomUser
+        fields=['username','password','email','first_name','last_name','phone','address']
 
 # To Create User Account we use User.objects.create_user() instead of create() - To save passwords encrypted
     def create(self,validated_data):
-        u=User.objects.create_user(**validated_data)
+        u=CustomUser.objects.create_user(**validated_data)
         u.save()
+        send_mail('User Registration Confirmation Mail',
+                  'Your Account Created Successfully',
+                  'thelonsoul3399@gmail.com',
+                  [u.email],fail_silently=True)
         return u
+

@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 from pathlib import Path
 
-from django.conf.global_settings import MEDIA_ROOT
+from django.conf.global_settings import MEDIA_ROOT, AUTH_USER_MODEL, EMAIL_BACKEND, EMAIL_USE_TLS, EMAIL_HOST_PASSWORD
+
+import movies
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,8 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'movies',
-    'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework'
 ]
 
 # MEDIA
@@ -50,13 +51,20 @@ import os
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL='/media/'
 
-# Authentication
+# Custom User Model
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ]
-}
+AUTH_USER_MODEL= 'movies.CustomUser'
+
+# Email
+
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+
+EMAIL_HOST_USER='thelonsoul3399@gmail.com'
+EMAIL_HOST_PASSWORD='fzaa kyqo bltj wzhy'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

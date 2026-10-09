@@ -31,5 +31,4 @@ urlpatterns = [
     path('',include(router.urls)),
     path('searchmovies',views.SearchAPIView.as_view()),
     path('userregister',views.RegisterAPIView.as_view()),
-    path('userlogin',views.obtain_auth_token.as_view()),
 ]
